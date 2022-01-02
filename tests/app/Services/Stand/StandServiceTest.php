@@ -10,7 +10,7 @@ use App\Allocator\Stand\CargoAirlineFallbackStandAllocator;
 use App\Allocator\Stand\CargoFlightArrivalStandAllocator;
 use App\Allocator\Stand\DomesticInternationalStandAllocator;
 use App\Allocator\Stand\FallbackArrivalStandAllocator;
-use App\Allocator\Stand\ReservedArrivalStandAllocator;
+use App\Allocator\Stand\CallsignDestinationReservedArrivalStandAllocator;
 use App\BaseFunctionalTestCase;
 use App\Events\StandAssignedEvent;
 use App\Events\StandUnassignedEvent;
@@ -682,7 +682,7 @@ class StandServiceTest extends BaseFunctionalTestCase
     {
         $this->assertEquals(
             [
-                ReservedArrivalStandAllocator::class,
+                CallsignDestinationReservedArrivalStandAllocator::class,
                 CargoFlightPreferredArrivalStandAllocator::class,
                 CargoFlightArrivalStandAllocator::class,
                 AirlineDestinationArrivalStandAllocator::class,
@@ -785,8 +785,9 @@ class StandServiceTest extends BaseFunctionalTestCase
             [
                 'callsign' => 'BMI221',
                 'stand_id' => 1,
-                'start' => Carbon::now()->subMinute(),
-                'end' => Carbon::now()->addMinute(),
+                'reserved_at' => Carbon::now(),
+                'origin' => 'EGSS',
+                'destination' => 'EGLL'
             ]
         );
 
@@ -795,6 +796,7 @@ class StandServiceTest extends BaseFunctionalTestCase
             [
                 'planned_aircraft' => 'B738',
                 'planned_destairport' => 'EGLL',
+                'planned_depairport' => 'EGSS',
                 'groundspeed' => 150,
                 // London
                 'latitude' => 51.487202,
@@ -1135,8 +1137,7 @@ class StandServiceTest extends BaseFunctionalTestCase
             [
                 'callsign' => null,
                 'stand_id' => $stand9->id,
-                'start' => Carbon::now()->addMinutes(59)->startOfSecond(),
-                'end' => Carbon::now()->addHours(2),
+                'reserved_at' => Carbon::now()->addMinutes(59)->startOfSecond(),
             ]
         );
 
@@ -1374,8 +1375,7 @@ class StandServiceTest extends BaseFunctionalTestCase
             [
                 'callsign' => $callsign,
                 'stand_id' => $standId,
-                'start' => $active ? Carbon::now() : Carbon::now()->addHours(2),
-                'end' => Carbon::now()->addHours(2)->addMinutes(10),
+                'reserved_at' => $active ? Carbon::now() : Carbon::now()->addHours(2),
             ]
         );
     }
