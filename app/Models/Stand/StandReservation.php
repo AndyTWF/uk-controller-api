@@ -12,8 +12,7 @@ class StandReservation extends Model
     protected $fillable = [
         'stand_id',
         'callsign',
-        'start',
-        'end',
+        'reserved_at',
         'origin',
         'destination'
     ];
@@ -40,8 +39,8 @@ class StandReservation extends Model
 
     public function scopeUpcoming(Builder $builder, Carbon $before): Builder
     {
-        return $builder->where('start', '>', Carbon::now())
-            ->where('start', '<=', $before);
+        return $builder->where('reserved_at', '>', Carbon::now())
+            ->where('reserved_at', '<=', $before);
     }
 
     public function scopeStandId(Builder $builder, int $standId): Builder
