@@ -12,6 +12,7 @@ use App\Models\Airfield\Airfield;
 use App\Models\Airline\Airline;
 use App\Models\Stand\Stand;
 use App\Models\Stand\StandAssignment;
+use App\Models\Stand\StandReservation;
 use App\Models\Vatsim\NetworkAircraft;
 use App\Services\DependencyService;
 use App\Services\LocationService;
@@ -171,7 +172,7 @@ class StandService
             $standData['callsign'] = $stand->activeReservations->first()->callsign;
         } elseif (!$stand->reservationsInNextHour->isEmpty()) {
             $standData['status'] = 'reserved_soon';
-            $standData['reserved_at'] = $stand->reservationsInNextHour->first()->start;
+            $standData['reserved_at'] = $stand->reservationsInNextHour->first()->reserved_at;
             $standData['callsign'] = $stand->reservationsInNextHour->first()->callsign;
         } elseif (
             !$stand->pairedStands->filter(function (Stand $stand) {

@@ -22,8 +22,7 @@ class StandReservationTest extends BaseFunctionalTestCase
         StandReservation::create(
             [
                 'stand_id' => 1,
-                'start' => Carbon::now()->subMinutes(10),
-                'end' => Carbon::now()->subMinutes(5),
+                'reserved_at' => Carbon::now()->addMinutes(32),
             ]
         );
 
@@ -31,30 +30,26 @@ class StandReservationTest extends BaseFunctionalTestCase
         StandReservation::create(
             [
                 'stand_id' => 1,
-                'start' => Carbon::now()->subMinutes(10),
-                'end' => Carbon::now(),
+                'reserved_at' => Carbon::now()->addMinutes(31),
             ]
         );
 
         $aboutToEnd = StandReservation::create(
             [
                 'stand_id' => 1,
-                'start' => Carbon::now()->subMinutes(10),
-                'end' => Carbon::now()->addSecond(),
+                'reserved_at' => Carbon::now()->addMinutes(30),
             ]
         );
         $veryActive = StandReservation::create(
             [
                 'stand_id' => 1,
-                'start' => Carbon::now()->subMinutes(10),
-                'end' => Carbon::now()->addMinutes(15),
+                'reserved_at' => Carbon::now()->addMinutes(2),
             ]
         );
         $onlyJustStarted = StandReservation::create(
             [
                 'stand_id' => 1,
-                'start' => Carbon::now(),
-                'end' => Carbon::now()->addMinutes(15),
+                'reserved_at' => Carbon::now()->subMinutes(30),
             ]
         );
 
@@ -62,12 +57,11 @@ class StandReservationTest extends BaseFunctionalTestCase
         StandReservation::create(
             [
                 'stand_id' => 1,
-                'start' => Carbon::now()->addSecond(),
-                'end' => Carbon::now()->addMinutes(15),
+                'reserved_at' => Carbon::now()->addMinutes(40),
             ]
         );
 
-        $activeReservations = StandReservation::active()->pluck('id')->toArray();
+        $activeReservations = StandReservation::active()->orderBy('id')->pluck('id')->toArray();
         $this->assertEquals([$aboutToEnd->id, $veryActive->id, $onlyJustStarted->id], $activeReservations);
     }
 
@@ -77,8 +71,7 @@ class StandReservationTest extends BaseFunctionalTestCase
         StandReservation::create(
             [
                 'stand_id' => 1,
-                'start' => Carbon::now()->subMinutes(10),
-                'end' => Carbon::now()->addMinutes(55),
+                'reserved_at' => Carbon::now()->subMinutes(10),
             ]
         );
 
@@ -86,32 +79,28 @@ class StandReservationTest extends BaseFunctionalTestCase
         StandReservation::create(
             [
                 'stand_id' => 1,
-                'start' => Carbon::now(),
-                'end' => Carbon::now()->addMinutes(5),
+                'reserved_at' => Carbon::now(),
             ]
         );
 
         $aboutToStart = StandReservation::create(
             [
                 'stand_id' => 1,
-                'start' => Carbon::now()->addSecond(),
-                'end' => Carbon::now()->addMinute(),
+                'reserved_at' => Carbon::now()->addMinutes(2),
             ]
         );
 
         $littleWhileOff = StandReservation::create(
             [
                 'stand_id' => 1,
-                'start' => Carbon::now()->addMinutes(5),
-                'end' => Carbon::now()->addMinutes(15),
+                'reserved_at' => Carbon::now()->addMinutes(5),
             ]
         );
 
         $justInRange = StandReservation::create(
             [
                 'stand_id' => 1,
-                'start' => Carbon::now()->addMinutes(10),
-                'end' => Carbon::now()->addMinutes(20),
+                'reserved_at' => Carbon::now()->addMinutes(10),
             ]
         );
 
@@ -119,8 +108,7 @@ class StandReservationTest extends BaseFunctionalTestCase
         StandReservation::create(
             [
                 'stand_id' => 1,
-                'start' => Carbon::now()->addMinutes(10)->addSecond(),
-                'end' => Carbon::now()->addMinutes(15),
+                'reserved_at' => Carbon::now()->addMinutes(10)->addSecond(),
             ]
         );
 

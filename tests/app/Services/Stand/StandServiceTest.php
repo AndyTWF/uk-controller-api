@@ -1135,9 +1135,9 @@ class StandServiceTest extends BaseFunctionalTestCase
         );
         StandReservation::create(
             [
-                'callsign' => null,
+                'callsign' => 'BAW999',
                 'stand_id' => $stand9->id,
-                'reserved_at' => Carbon::now()->addMinutes(59)->startOfSecond(),
+                'reserved_at' => Carbon::now()->addMinutes(35)->startOfSecond(),
             ]
         );
 
@@ -1227,8 +1227,8 @@ class StandServiceTest extends BaseFunctionalTestCase
                     'identifier' => 'TEST9',
                     'type' => null,
                     'status' => 'reserved_soon',
-                    'callsign' => null,
-                    'reserved_at' => Carbon::now()->addMinutes(59)->startOfSecond(),
+                    'callsign' => 'BAW999',
+                    'reserved_at' => Carbon::now()->addMinutes(35)->startOfSecond(),
                     'airlines' => [],
                     'max_wake_category' => 'LM',
                     'max_aircraft_type' => null,

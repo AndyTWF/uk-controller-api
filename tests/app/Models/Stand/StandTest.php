@@ -43,8 +43,7 @@ class StandTest extends BaseFunctionalTestCase
         StandReservation::create(
             [
                 'stand_id' => $extraStand->id,
-                'start' => Carbon::now()->subMinutes(1),
-                'end' => Carbon::now()->addHour(),
+                'reserved_at' => Carbon::now(),
             ]
         );
 
@@ -270,8 +269,7 @@ class StandTest extends BaseFunctionalTestCase
         StandReservation::create(
             [
                 'stand_id' => 1,
-                'start' => Carbon::now()->subMinutes(10),
-                'end' => Carbon::now()->subMinutes(5),
+                'reserved_at' => Carbon::now()->subMinutes(31),
             ]
         );
 
@@ -279,8 +277,7 @@ class StandTest extends BaseFunctionalTestCase
         StandReservation::create(
             [
                 'stand_id' => 2,
-                'start' => Carbon::now()->subMinutes(10),
-                'end' => Carbon::now()->addMinutes(5),
+                'reserved_at' => Carbon::now()->subMinutes(25),
             ]
         );
 
@@ -288,8 +285,7 @@ class StandTest extends BaseFunctionalTestCase
         StandReservation::create(
             [
                 'stand_id' => 3,
-                'start' => Carbon::now()->addMinute(),
-                'end' => Carbon::now()->addHour(),
+                'reserved_at' => Carbon::now()->addMinutes(31),
             ]
         );
 
