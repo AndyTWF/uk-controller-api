@@ -7,7 +7,11 @@
         <x-tables::hr />
 
         @if ($controller)
-            <h1>Controlling As:</h1>
+            @if ($controller->controller_position_id)
+                <h1>Controlling As:</h1>
+            @else
+                <h1>Logged In As:</h1>
+            @endif
             <p><b>{{$controller->callsign}} - {{$controller->frequency}}</b></p>
         @elseif($aircraft)
             <h1>Flying As:</h1>
