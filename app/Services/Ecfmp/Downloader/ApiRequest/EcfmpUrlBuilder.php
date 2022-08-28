@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Ecfmp\ApiRequest;
+namespace App\Services\Ecfmp\Downloader\ApiRequest;
 
 class EcfmpUrlBuilder
 {

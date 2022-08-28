@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Services\Ecfmp\ApiRequest;
+namespace App\Services\Ecfmp\Downloader\ApiRequest;
 
 use App\Exceptions\Ecfmp\EcfmpDataDownloadFailedException;
 use Illuminate\Support\Facades\Http;
 
-class FlowMeasuresRequest implements ApiRequestInterface
+class FlightInformationRegionsRequest implements ApiRequestInterface
 {
     private readonly EcfmpUrlBuilder $urlBuilder;
 
@@ -16,16 +16,11 @@ class FlowMeasuresRequest implements ApiRequestInterface
 
     public function getData(): array
     {
-        $response = Http::get(
-            $this->urlBuilder->buildUrl('/api/v1/flow-measure'),
-            [
-                'deleted' => 1,
-            ]
-        );
+        $response = Http::get($this->urlBuilder->buildUrl('/api/v1/flight-information-region'));
 
         if (!$response->successful()) {
             throw new EcfmpDataDownloadFailedException(
-                sprintf('Failed to download Flow Measure data, response code was %d', $response->status())
+                sprintf('Failed to download FIR data, response code was %d', $response->status())
             );
         }
 
