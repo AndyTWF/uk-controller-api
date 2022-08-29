@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Ecfmp\EcfmpController;
 use App\Http\Controllers\MissedApproachController;
 use App\Http\Controllers\PrenoteMessageController;
 use App\Rules\VatsimCallsign;
@@ -307,6 +308,12 @@ Route::middleware('api')
                     Route::get(
                         'departure/intervals/sid-groups/dependency',
                         'DepartureController@getDepartureSidIntervalGroupsDependency'
+                    );
+
+                    // ecfmp
+                    Route::get(
+                        'ecfmp',
+                        EcfmpController::class
                     );
 
                     // Flight rules

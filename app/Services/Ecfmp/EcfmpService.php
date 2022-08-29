@@ -12,10 +12,4 @@ class EcfmpService
     {
         return Cache::get(self::ECFMP_CACHE_KEY, []);
     }
-
-    public function updateEcfmpData(): array
-    {
-        $currentData = $this->getEcfmpData();
-
-    }
 }
