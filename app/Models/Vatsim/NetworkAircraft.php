@@ -73,14 +73,6 @@ class NetworkAircraft extends Model
         });
     }
 
-    public static function booted()
-    {
-        parent::booted();
-        static::addGlobalScope('active', function (Builder $builder) {
-            $builder->where('network_aircraft.updated_at', '>', Carbon::now()->subMinutes(self::TIME_OUT_MINUTES));
-        });
-    }
-
     public function getSquawkAttribute(): string
     {
         return $this->attributes['transponder'];
@@ -160,6 +152,11 @@ class NetworkAircraft extends Model
     public function scopeTimedOut(Builder $builder): Builder
     {
         return $builder->where('network_aircraft.updated_at', '<', Carbon::now()->subMinutes(self::TIME_OUT_MINUTES));
+    }
+
+    public function scopeNotTimedOut(Builder $builder): Builder
+    {
+        return $builder->where('network_aircraft.updated_at', '>', Carbon::now()->subMinutes(self::TIME_OUT_MINUTES));
     }
 
     public function destinationAirfield(): BelongsTo

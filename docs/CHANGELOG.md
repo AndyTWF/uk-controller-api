@@ -1,5 +1,54 @@
 # UK Controller Plugin API Changelog
 
+## [6.29.3](https://github.com/VATSIM-UK/uk-controller-api/compare/6.29.2...6.29.3) (2022-10-30)
+
+
+### Bug Fixes
+
+* prevent mass delete of srd routes ([bddfb5f](https://github.com/VATSIM-UK/uk-controller-api/commit/bddfb5f2e587f4b2cb41fa4aea367060983e0c9d))
+
+## [6.29.2](https://github.com/VATSIM-UK/uk-controller-api/compare/6.29.1...6.29.2) (2022-10-26)
+
+
+### Bug Fixes
+
+* prevent mass deletes of squawk assignments ([8dbf5c0](https://github.com/VATSIM-UK/uk-controller-api/commit/8dbf5c0cbae24fc8cbdce357b73bdaece5622b84))
+
+## [6.29.1](https://github.com/VATSIM-UK/uk-controller-api/compare/6.29.0...6.29.1) (2022-10-25)
+
+
+### Performance Improvements
+
+* notification controllers query performance ([67992f1](https://github.com/VATSIM-UK/uk-controller-api/commit/67992f125cd7d7dd33cd18593b843f709d1fd714))
+
+## [6.29.0](https://github.com/VATSIM-UK/uk-controller-api/compare/6.28.0...6.29.0) (2022-10-21)
+
+
+### Features
+
+* allow plugin versions to be deleted and restored ([f88ea4b](https://github.com/VATSIM-UK/uk-controller-api/commit/f88ea4b67929c2ee84ad456335fbf9f09f2f32f8))
+* show plugin versions in the table ([6cc2331](https://github.com/VATSIM-UK/uk-controller-api/commit/6cc2331997ec6c80ec2816ee1b26e3c152ccf53c))
+
+## [6.28.0](https://github.com/VATSIM-UK/uk-controller-api/compare/6.27.4...6.28.0) (2022-10-19)
+
+
+### Features
+
+* list squawk assignments in the plugin ([442f795](https://github.com/VATSIM-UK/uk-controller-api/commit/442f7954029ab148471fab3c08bc932d77d918e6))
+
+## [6.27.4](https://github.com/VATSIM-UK/uk-controller-api/compare/6.27.3...6.27.4) (2022-10-19)
+
+
+### Bug Fixes
+
+* abort with 401 if socialite fails on login ([a575917](https://github.com/VATSIM-UK/uk-controller-api/commit/a5759171e89506ed8090baefb2012ea23f72aaed))
+* **admin:** Ambiguous id on paired stand search ([476d13b](https://github.com/VATSIM-UK/uk-controller-api/commit/476d13b4e28f328861ff14b4e8ea229cb54bc85a))
+
+
+### Performance Improvements
+
+* fix n+1 query in msl retrieval ([8a7eb74](https://github.com/VATSIM-UK/uk-controller-api/commit/8a7eb74c1510da8639e58ce606c45148fa7bb8fb))
+
 ## [6.27.3](https://github.com/VATSIM-UK/uk-controller-api/compare/6.27.2...6.27.3) (2022-10-18)
 
 
