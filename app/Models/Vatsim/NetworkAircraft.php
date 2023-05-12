@@ -155,4 +155,9 @@ class NetworkAircraft extends Model
     {
         return $this->hasOne(User::class, 'id', 'cid');
     }
+
+    public function plannedDestinationAirfield(): string
+    {
+        return $this->planned_destairport;
+    }
 }

@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Allocator\Stand\Airline\AirlineStandPreferences;
+use App\Allocator\Stand\Airline\AirlineStandPreferencesInterface;
 use App\Allocator\Stand\AirlineAircraftArrivalStandAllocator;
 use App\Allocator\Stand\AirlineAircraftTerminalArrivalStandAllocator;
 use App\Allocator\Stand\AirlineCallsignArrivalStandAllocator;
@@ -63,5 +65,8 @@ class StandServiceProvider extends ServiceProvider
         });
         $this->app->singleton(StandReservationsImport::class);
         $this->app->singleton(AirfieldStandService::class);
+
+        // New stand stuff
+        $this->app->singleton(AirlineStandPreferencesInterface::class, AirlineStandPreferences::class);
     }
 }
