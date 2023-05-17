@@ -10,5 +10,5 @@ use Illuminate\Support\Collection;
  */
 interface StandFinderInterface
 {
-    public function findStands(NetworkAircraft $aircraft): Collection;
+    public function findStands(NetworkAircraft $aircraft, Collection $filters): Collection;
 }

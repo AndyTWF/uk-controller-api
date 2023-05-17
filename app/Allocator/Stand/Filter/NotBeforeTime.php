@@ -23,6 +23,10 @@ class NotBeforeTime implements StandFilterInterface
             return false;
         }
 
+        if ($airlinePreference->not_before === null) {
+            return true;
+        }
+
         return Carbon::now() > Carbon::now()->setTimeFrom($airlinePreference->not_before)
             || Carbon::now()->lessThan(Carbon::now()->setTime(2, 0));
     }

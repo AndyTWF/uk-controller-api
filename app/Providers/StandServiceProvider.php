@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Allocator\Stand\Airline\AirlineStandPreferences;
 use App\Allocator\Stand\Airline\AirlineStandPreferencesInterface;
+use App\Allocator\Stand\Airline\Filter\AirlineStandPreferenceFilter;
+use App\Allocator\Stand\Airline\Filter\AirlineStandPreferenceFilterInterface;
 use App\Allocator\Stand\AirlineAircraftArrivalStandAllocator;
 use App\Allocator\Stand\AirlineAircraftTerminalArrivalStandAllocator;
 use App\Allocator\Stand\AirlineCallsignArrivalStandAllocator;
@@ -14,6 +16,13 @@ use App\Allocator\Stand\AirlineDestinationTerminalArrivalStandAllocator;
 use App\Allocator\Stand\CargoFlightPreferredArrivalStandAllocator;
 use App\Allocator\Stand\CargoFlightArrivalStandAllocator;
 use App\Allocator\Stand\CidReservedArrivalStandAllocator;
+use App\Allocator\Stand\Filter\NotOccupied;
+use App\Allocator\Stand\Generator\StandOptionsGenerator;
+use App\Allocator\Stand\Generator\StandOptionsGeneratorInterface;
+use App\Allocator\Stand\Randomiser\StandRandomiser;
+use App\Allocator\Stand\Randomiser\StandRandomiserInterface;
+use App\Allocator\Stand\Selector\StandSelector;
+use App\Allocator\Stand\Selector\StandSelectorInterface;
 use App\Allocator\Stand\UserRequestedArrivalStandAllocator;
 use App\Services\Stand\AirfieldStandService;
 use App\Services\Stand\ArrivalAllocationService;
@@ -68,5 +77,19 @@ class StandServiceProvider extends ServiceProvider
 
         // New stand stuff
         $this->app->singleton(AirlineStandPreferencesInterface::class, AirlineStandPreferences::class);
+        $this->app->singleton(AirlineStandPreferenceFilterInterface::class, AirlineStandPreferenceFilter::class);
+        $this->app->singleton(StandRandomiserInterface::class, StandRandomiser::class);
+        $this->app->singleton(
+            StandSelectorInterface::class,
+            fn(Application $application) => $application->make(
+                StandSelector::class,
+                [
+                    'commonFilters' => collect(
+                        [$application->make(NotOccupied::class)]
+                    ),
+                ]
+            )
+        );
+        $this->app->singleton(StandOptionsGeneratorInterface::class, StandOptionsGenerator::class);
     }
 }

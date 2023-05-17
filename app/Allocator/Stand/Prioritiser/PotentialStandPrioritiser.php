@@ -1,18 +1,16 @@
 <?php
 
-namespace App\Allocator\Stand\Generator;
+namespace App\Allocator\Stand\Prioritiser;
 
-use App\Allocator\Stand\Filter\StandFilterInterface;
 use App\Allocator\Stand\Finder\StandFinderInterface;
 use App\Allocator\Stand\Rule\CacheableStandRuleInterface;
 use App\Allocator\Stand\Rule\StandRuleInterface;
 use App\Allocator\Stand\Sorter\StandSorterInterface;
-use App\Models\Stand\Stand;
 use App\Models\Vatsim\NetworkAircraft;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 
-class PotentialStandGenerator implements PotentialStandGeneratorInterface
+class PotentialStandPrioritiser implements PotentialStandPrioritiserInterface
 {
     private readonly StandFinderInterface $finder;
     private readonly StandSorterInterface $sorter;
@@ -28,7 +26,7 @@ class PotentialStandGenerator implements PotentialStandGeneratorInterface
         $this->rule = $rule;
     }
 
-    public function generatePotentialStands(NetworkAircraft $aircraft): Collection
+    public function prioritisePotentialStands(NetworkAircraft $aircraft): Collection
     {
         return $this->rule instanceof CacheableStandRuleInterface
             ? $this->getCachedStands($aircraft, $this->rule)
@@ -52,12 +50,7 @@ class PotentialStandGenerator implements PotentialStandGeneratorInterface
         return $this->sorter->sort(
             $this->rule,
             $aircraft,
-            $this->finder->findStands($aircraft)
-                ->reject(
-                    fn(Stand $stand) => $this->rule->filters()->contains(
-                        fn(StandFilterInterface $filter) => !$filter->filter($aircraft, $stand)
-                    )
-                )
+            $this->finder->findStands($aircraft, $this->rule->queryFilters())
         );
     }
 }

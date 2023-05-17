@@ -1,8 +1,9 @@
 <?php
+
 namespace App\Console\Commands;
 
 use App\Allocator\Stand\Finder\AirfieldStandFinder;
-use App\Allocator\Stand\Generator\PotentialStandGenerator;
+use App\Allocator\Stand\Prioritiser\PotentialStandPrioritiser;
 use App\Allocator\Stand\Rule\AirlineStandRule;
 use App\Allocator\Stand\Sorter\StandSorter;
 use App\Models\User\User;
@@ -33,12 +34,14 @@ class UserCreate extends Command
      */
     public function handle(UserService $userService)
     {
-        $generator = new PotentialStandGenerator(
+        $generator = new PotentialStandPrioritiser(
             app()->make(AirfieldStandFinder::class),
             app()->make(StandSorter::class),
             new AirlineStandRule()
         );
-        dd($generator->generatePotentialStands(NetworkAircraft::find('BAW123')));
+        $selector = app()->make(\App\Allocator\Stand\Selector\StandSelector::class);
+        $stand = $selector->selectStand(NetworkAircraft::find('BAW123'), new AirlineStandRule(), $generator);
+        dd($stand->id);
 
         // Invalid VATSIM CID
         if (!ctype_digit($this->argument('vatsim_cid')) || $this->argument('vatsim_cid') < 800000) {
